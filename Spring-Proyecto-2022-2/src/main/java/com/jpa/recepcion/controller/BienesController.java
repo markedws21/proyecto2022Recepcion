@@ -39,18 +39,19 @@ public class BienesController {
 	}
 	
 	@RequestMapping("/grabar")
-	public String grabar(@RequestParam("codigo")int cod,@RequestParam("descripcion")String descri,
+	public String grabar(@RequestParam("codigo")int cod,@RequestParam("proveedor")int prove,
+			@RequestParam("descripcion")String descri,
 			@RequestParam("precio")double pre,@RequestParam("fechaEntrada")String fecha,
-			@RequestParam("proveedor")int prove, RedirectAttributes redirect) {
+			RedirectAttributes redirect) {
 		try {
 			Bienes bien = new Bienes();
 			bien.setCodigo(cod);
-			bien.setDescripcion(descri);
-			bien.setPrecio(pre);
-			bien.setFechaEntrada(LocalDate.parse(fecha));
 			Proveedor pro = new Proveedor();
 			pro.setCodigo(prove);
 			bien.setProveedor(pro);
+			bien.setDescripcion(descri);
+			bien.setPrecio(pre);
+			bien.setFechaEntrada(LocalDate.parse(fecha));
 			servicioBien.guardar(bien);
 			if(cod==0)
 				redirect.addFlashAttribute("MENSAJE","Bien registrado");

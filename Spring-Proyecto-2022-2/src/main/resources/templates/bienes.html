@@ -74,7 +74,7 @@
 		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 		      </div>
 		      <div class="modal-body">
-		        <form id="formEmpleado" action="guardar" method="post" class="row g-3">
+		        <form id="formEmpleado" action="grabar" method="post" class="row g-3">
 		         <div class="form-group col-md-4">
 				    <label for="validationCustomUsername" class="form-label fw-bold">Código</label>
 				    <div class="input-group has-validation">
@@ -115,7 +115,7 @@
 				    <div class="input-group has-validation">
 				      <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-prescription2"></i></span>
 				      <select class="form-select form-control" name="proveedor" id="idProveedor">
-					  <option value=" ">[Seleccione Distrito]</option>
+					  <option value=" ">[Seleccione Proveedor]</option>
 					  <option th:each="row:${listaProveedores}" 
 					  		th:utext="${row.nombre}"
 					  		th:value="${row.codigo}"
@@ -124,8 +124,8 @@
 				    </div>
 				  </div>
 				  <div class="modal-footer">
-			      	<button type="submit" class="btn btn-info"><i class="bi bi-save2"></i> Actualizar</button>
-			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-circle-fill"></i> Cerrar</button>
+			      	<button type="submit" class="btn btn-info"><i class="bi bi-save2"></i> Guardar</button>
+			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-circle-fill"></i> Cancelar</button>
 			      </div>
 				</form>
 		      </div>
@@ -139,10 +139,10 @@
         <thead>
 							   <tr>
 					                <th>Código</th>
+					                <th>Proveedor</th>
 					                <th>Descripcion</th>
 					                <th>Precio</th>
 					                <th>Fecha</th>
-					                <th>Proveedor</th>
 					                <th></th>
 					                <th></th>
 					                <th></th>
@@ -151,10 +151,10 @@
 							  <tbody>
 								<tr  th:each="bean:${listaBienes}">
 							      <td th:text="${bean.codigo}"></td>
+							      <td th:text="${bean.proveedor.nombre}"></td>
 							      <td th:text="${bean.descripcion}"></td>
 							      <td th:text="${bean.precio}"></td>
 							      <td th:text="${bean.fechaEntrada}"></td>
-							      <td th:text="${bean.proveedor.nombre}"></td>
 							      <td>
 							      	<button type="button" class="btn btn-info btn-seleccione" data-bs-toggle="modal" 
 							      					data-bs-target="#modalBienes"></button>

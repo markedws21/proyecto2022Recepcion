@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Mantenimiento Bienes</title>
+
+ 	<!-- Bootstrap CSS -->
+    <link th:href="@{/resources/css/bootstrap.min.css}" rel="stylesheet">
+	<link th:href="@{/resources/css/dataTables.bootstrap5.min.css}" rel="stylesheet">  
+	<link th:href="@{/resources/datepicker/bootstrap-datepicker.css}" rel="stylesheet">
+	<link th:href="@{/resources/css/bootstrap-icons.css}" rel="stylesheet">
+	
+	<link href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+	
+	<link rel="stylesheet" th:href="@{/resources/alertifyjs/css/alertify.css}">
+	<link rel="stylesheet" th:href="@{/resources/alertifyjs/css/alertify.min.css}"> 
+	
+	<style>
+		.modal-header{
+		color:#fff;
+		background: green;
+		display: flex;
+  		justify-content: center;  		
+		}
+		.help-block {
+		  		color: red;
+		}
+		.form-group.has-error .form-control-label {
+		  color: red;
+		}
+		.form-group.has-error .form-control {
+		  border: 1px solid red;
+		  box-shadow: 0 0 0 0.2rem rgba(250, 16, 0, 0.18);
+		}
+		.alertify .ajs-dialog {
+		    top: 50%;
+		    transform: translateY(-50%);
+		    margin: auto;
+		}
+		.ajs-header{
+			background-color: #286090 !important;
+			color: white !important;
+			/*text-align: center;*/
+			font-size: 18px;
+			font-weight: bold;
+		}
+		.ajs-ok{
+			color: #fff;
+		    background-color: #007bff;
+		    border-color: #007bff;
+		}
+		.ajs-cancel{
+			color: #fff;
+		    background-color: #dc3545;
+		    border-color: #dc3545;
+		}
+	</style>
+	  
+</head>
+<body>
+	<div class="container">
+		<br>
+		<h3 class="text-center">::: LISTA BIENES :::</h3>	  
+	    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalBien">
+	  		Nuevo Bien
+	  	</button>
+	  	
+	  	<!-- Modal PARA REGISTRAR-->
+		<div class="modal fade" id="modalBien" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered modal-lg">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="staticBackdropLabel">BIEN</h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <div class="modal-body">
+		        <form id="formEmpleado" action="guardar" method="post" class="row g-3">
+		         <div class="form-group col-md-4">
+				    <label for="validationCustomUsername" class="form-label fw-bold">Código</label>
+				    <div class="input-group has-validation">
+				      <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-file-person"></i></span>
+				      <input type="text" class="form-control" name="codigo" id="idCodigo" readonly value="0">
+				    </div>
+				  </div>		  
+				  <div class="form-group col-md-6">
+				    <label for="validationCustomUsername" class="form-label fw-bold">Descripcion</label>
+				    <div class="input-group has-validation">
+				      <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-file-person"></i></span>
+				      <input type="text" class="form-control" name="descripcion" id="idDescripcion">
+				    </div>
+				  </div>
+				  <div class="form-group col-md-6">
+				    <label for="validationCustomUsername" class="form-label fw-bold">Precio</label>
+				    <div class="input-group has-validation">
+				      <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-file-person"></i></span>
+				      <input type="text" class="form-control" name="precio" id="idPrecio">
+				    </div>
+				  </div>
+				  <div class="form-group col-md-6">
+				    <label for="validationCustomUsername" class="form-label fw-bold">DNI</label>
+				    <div class="input-group has-validation">
+				      <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-bank2"></i></span>
+				      <input type="text" class="form-control" name="dni" id="idDni">
+				    </div>
+				  </div>
+				  <div class="form-group col-md-4">
+				    <label for="validationCustomUsername" class="form-label fw-bold">Fecha Entrada</label>
+				    <div class="input-group has-validation">
+				      <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-calendar-date"></i></span>
+				      <i class="fas fa-calendar-week form-control-feedback2"></i>
+												    <input type="text" style="background-color:#aed6f1" class="form-control" id="usr1"
+												    													  name="fecha" placeholder="YYYY-MM-DD" autocomplete="off" >
+				  <div class="form-group col-md-6">
+				    <label for="validationCustomUsername" class="form-label fw-bold">Proveedor</label>
+				    <div class="input-group has-validation">
+				      <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-prescription2"></i></span>
+				      <select class="form-select form-control" name="proveedor" id="idProveedor">
+					  <option value=" ">[Seleccione Distrito]</option>
+					  <option th:each="row:${listaProveedores}" 
+					  		th:utext="${row.nombre}"
+					  		th:value="${row.codigo}"
+					  />
+					</select>
+				    </div>
+				  </div>
+				  <div class="modal-footer">
+			      	<button type="submit" class="btn btn-info"><i class="bi bi-save2"></i> Actualizar</button>
+			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-circle-fill"></i> Cerrar</button>
+			      </div>
+				</form>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	    <!--fin modal PARA REGISTRAR-->
+
+	    <div class="mt-5">
+	    <table id="tableEmpleados" class="table table-striped" style="width:100%">
+        <thead>
+							   <tr>
+					                <th>Código</th>
+					                <th>Descripcion</th>
+					                <th>Precio</th>
+					                <th>Fecha</th>
+					                <th>Proveedor</th>
+					                <th></th>
+					                <th></th>
+					                <th></th>
+					            </tr>
+							  </thead>
+							  <tbody>
+								<tr  th:each="bean:${listaBienes}">
+							      <td th:text="${bean.codigo}"></td>
+							      <td th:text="${bean.descripcion}"></td>
+							      <td th:text="${bean.precio}"></td>
+							      <td th:text="${bean.fechaEntrada}"></td>
+							      <td th:text="${bean.proveedor.nombre}"></td>
+							      <td>
+							      	<button type="button" class="btn btn-info btn-seleccione" data-bs-toggle="modal" 
+							      					data-bs-target="#modalBienes"></button>
+							      </td>
+							    </tr>  
+							  </tbody>
+    </table>
+	</div>    
+	    
+	  
+	</div>
+	
+	<!-- JS principal -->
+	<script th:src="@{/resources/js/jquery-3.5.1.js}"></script>
+
+	<!-- Option 1: Bootstrap Bundle with Popper -->
+    <script th:src="@{/resources/js/bootstrap.bundle.min.js}"></script>
+
+	<!-- JS para la tabla -->
+	<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+
+	<!--JS para validar  -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
+	
+	<!--JS para Calendario  -->
+	<script th:src="@{/resources/datepicker/bootstrap-datepicker.js}"></script> 
+	
+	<script	src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+	
+	<script th:src="@{/resources/alertifyjs/alertify.js}"></script>
+	<script th:src="@{/resources/alertifyjs/alertify.min.js}"></script>
+	
+	
+	<script th:inline="javascript" th:if="${MENSAJE!=null}">
+		let msj;
+		msj=/*[[${MENSAJE}]]*/
+		toastr.success(msj, toastr.options = {
+			"timeOut": "2000",
+			"positionClass " : " toast-top-right ",
+		});
+	</script>
+	
+	
+	<script>
+		$(function() {
+				$('#usr1').datepicker({
+					'format': 'yyyy-mm-dd',
+					'autoclose': true
+				});
+		
+			});
+	</script>
+
+	<script>
+		$(document).ready(function () {
+		    $('#tableEmpleados').DataTable();
+		    $('#modalEmpleado')
+	        .on('hidden.bs.modal',function(){
+				$("#formEmpleado").bootstrapValidator('resetForm',true);
+				$("#idCodigo").val(0)
+			})
+		    
+		});
+		
+		$(document).on("click",".btn-seleccione",function(){
+			let cod=$(this).parents("tr").find("td")[0].innerHTML;
+			$.get("buscar?codigo="+cod,function(response){
+				console.log(response);
+				$("#idCodigo").val(response.codigo);
+				$("#idNombre").val(response.nombre);
+				$("#idApellido").val(response.apellido);
+				$("#idDni").val(response.dni);
+				$("#idHijos").val(response.hijos);
+				$("#idSueldo").val(response.sueldo);
+				$("#idDistrito").val(response.distrito.codigo);
+			})
+			
+		})
+		 
+	</script>
+	
+	
+</body>
+</html>
+
+
+
+
+
+
+
+
+

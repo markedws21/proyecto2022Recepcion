@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Mantenimiento Proveedor</title>
+
+ 	<!-- Bootstrap CSS -->
+    <link th:href="@{/resources/css/bootstrap.min.css}" rel="stylesheet">
+	<link th:href="@{/resources/css/dataTables.bootstrap5.min.css}" rel="stylesheet">  
+	<link th:href="@{/resources/datepicker/bootstrap-datepicker.css}" rel="stylesheet">
+	<link th:href="@{/resources/css/bootstrap-icons.css}" rel="stylesheet">
+	
+	<link href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+	
+	<link rel="stylesheet" th:href="@{/resources/alertifyjs/css/alertify.css}">
+	<link rel="stylesheet" th:href="@{/resources/alertifyjs/css/alertify.min.css}"> 
+	
+	<style>
+		.modal-header{
+		color:#fff;
+		background: #286090;
+		display: flex;
+  		justify-content: center;  		
+		}
+		.help-block {
+		  		color: red;
+		}
+		.form-group.has-error .form-control-label {
+		  color: red;
+		}
+		.form-group.has-error .form-control {
+		  border: 1px solid red;
+		  box-shadow: 0 0 0 0.2rem rgba(250, 16, 0, 0.18);
+		}
+		.alertify .ajs-dialog {
+		    top: 50%;
+		    transform: translateY(-50%);
+		    margin: auto;
+		}
+		.ajs-header{
+			background-color: #286090 !important;
+			color: white !important;
+			/*text-align: center;*/
+			font-size: 18px;
+			font-weight: bold;
+		}
+		.ajs-ok{
+			color: #fff;
+		    background-color: #007bff;
+		    border-color: #007bff;
+		}
+		.ajs-cancel{
+			color: #fff;
+		    background-color: #dc3545;
+		    border-color: #dc3545;
+		}
+	</style>
+	  
+</head>
+<body>
+	<div class="container">
+		<br>
+		<h3 class="text-center">::: LISTA PROVEEDORES :::</h3>	  
+	    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEmpleado">
+	  		Nuevo Proveedor
+	  	</button>
+	  	
+	  	<!-- Modal PARA REGISTRAR-->
+		<div class="modal fade" id="modalEmpleado" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered modal-lg">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="staticBackdropLabel">PROVEEDOR</h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <div class="modal-body">
+		        <form id="formEmpleado" action="/proveedor/grabar" method="post" class="row g-3">
+		         <div class="form-group col-md-4">
+				    <label for="validationCustomUsername" class="form-label fw-bold">Código</label>
+				    <div class="input-group has-validation">
+				      <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-1-circle"></i></span>
+				      <input type="text" class="form-control" name="codigo" id="idCodigo" readonly value="0">
+				    </div>
+				  </div>
+				  
+				  <div class="form-group col-md-6">
+				    <label for="validationCustomUsername" class="form-label fw-bold">RUC</label>
+				    <div class="input-group has-validation">
+				      <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-1-circle"></i></span>
+				      <input type="text" class="form-control" name="ruc" id="idRuc">
+				    </div>
+				  </div>
+				  		  
+				  <div class="form-group col-md-6">
+				    <label for="validationCustomUsername" class="form-label fw-bold">Nombre</label>
+				    <div class="input-group has-validation">
+				      <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-person"></i></span>
+				      <input type="text" class="form-control" name="nombre" id="idNombre">
+				    </div>
+				  </div>
+				  
+				  <div class="form-group col-md-6">
+				    <label for="validationCustomUsername" class="form-label fw-bold">Distrito</label>
+				    <div class="input-group has-validation">
+				      <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-bank2"></i></span>
+				      <input type="text" class="form-control" name="distrito" id="idDistrito">
+				    </div>
+				  </div>
+				  
+				  <div class="form-group col-md-6">
+				    <label for="validationCustomUsername" class="form-label fw-bold">Representante</label>
+				    <div class="input-group has-validation">
+				      <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-universal-access"></i></span>
+				      <input type="text" class="form-control" name="representante" id="idRepresentante">
+				    </div>
+				  </div>
+				  
+				  <div class="form-group col-md-6">
+				    <label for="validationCustomUsername" class="form-label fw-bold">Telefono</label>
+				    <div class="input-group has-validation">
+				      <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-telephone"></i></span>
+				      <input type="text" class="form-control" name="fono" id="idTelefono">
+				    </div>
+				  </div>
+				  
+				  <div class="form-group col-md-6">
+				    <label for="validationCustomUsername" class="form-label fw-bold">Correo</label>
+				    <div class="input-group has-validation">
+				      <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-envelope"></i></span>
+				      <input type="text" class="form-control" name="correo" id="idCorreo">
+				    </div>
+				  </div>
+				  
+				  <div class="form-group col-md-6">
+				    <label for="validationCustomUsername" class="form-label fw-bold">Razon Social</label>
+				    <div class="input-group has-validation">
+				      <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-shop"></i></span>
+				      <input type="text" class="form-control" name="razonSoc" id="idRazonSocial">
+				    </div>
+				  </div>
+				  
+				  <div class="modal-footer">
+			      	<button type="submit" class="btn btn-success"><i class="bi bi-save2"></i> Grabar</button>
+			        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="bi bi-x-circle-fill"></i> Cerrar</button>
+			      </div>
+				</form>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	    <!--fin modal PARA REGISTRAR-->
+
+	    <div class="mt-5">
+	    <table id="tableEmpleados" class="table table-striped" style="width:100%">
+        <thead>
+							   <tr>
+					                <th>Código</th>
+					                <th>RUC</th>
+					                <th>Empresa</th>
+					                <th>Distrito</th>
+					                <th>Representante</th>
+					                <th>Telefono</th>
+					                <th>Correo</th>
+					                <th>Razon Soc</th>
+					                <th></th>
+					            </tr>
+							  </thead>
+							  <tbody>
+								<tr  th:each="bean:${proveedores}">
+							      <td th:text="${bean.codigo}"></td>
+							      <td th:text="${bean.ruc}"></td>
+							      <td th:text="${bean.nombre}"></td>
+							      <td th:text="${bean.distrito}"></td>
+							      <td th:text="${bean.representante}"></td>
+							      <td th:text="${bean.fono}"></td>
+							      <td th:text="${bean.correo}"></td>
+							      <td th:text="${bean.razonSoc}"></td>
+							      <td>
+                                      <a class="btn btn-info btn-editar" data-bs-toggle="modal" data-bs-target="#modalEmpleado"><i class="bi bi-pencil"></i></a>
+							          <a class="btn btn-danger btn-eliminar"><i class="bi bi-trash-fill"></i></a>
+							      </td>
+							    </tr>  
+							  </tbody>
+    </table>
+	</div>    
+	    
+	  
+	</div>
+	
+	<!-- JS principal -->
+	<script th:src="@{/resources/js/jquery-3.5.1.js}"></script>
+
+	<!-- Option 1: Bootstrap Bundle with Popper -->
+    <script th:src="@{/resources/js/bootstrap.bundle.min.js}"></script>
+
+	<!-- JS para la tabla -->
+	<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+
+	<!--JS para validar  -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.0/js/bootstrapValidator.js"></script>
+	
+	<!--JS para Calendario  -->
+	<script th:src="@{/resources/datepicker/bootstrap-datepicker.js}"></script> 
+	
+	<script	src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+	
+	<script th:src="@{/resources/alertifyjs/alertify.js}"></script>
+	<script th:src="@{/resources/alertifyjs/alertify.min.js}"></script>
+	
+	
+	<script th:inline="javascript" th:if="${MENSAJE!=null}">
+		let msj;
+		msj=/*[[${MENSAJE}]]*/
+		toastr.success(msj, toastr.options = {
+			"timeOut": "2000",
+			"positionClass " : " toast-top-right ",
+		});
+	</script>
+	
+	
+	<script>
+		$(function() {
+				$('#usr1').datepicker({
+					'format': 'yyyy-mm-dd',
+					'autoclose': true
+				});
+		
+			});
+	</script>
+
+	<script>
+		$(document).ready(function () {
+		    $('#tableEmpleados').DataTable();
+		    $('#modalEmpleado')
+	        .on('hidden.bs.modal',function(){
+				$("#formEmpleado").bootstrapValidator('resetForm',true);
+				$("#idCodigo").val(0)
+			})
+		    
+		});
+		
+		$(document).on("click",".btn-editar",function(){
+			let cod=$(this).parents("tr").find("td")[0].innerHTML;
+			$.get("buscar?codigo="+cod,function(response){
+				console.log(response);
+				$("#idCodigo").val(response.codigo);
+				$("#idRuc").val(response.ruc);
+				$("#idNombre").val(response.nombre);
+				$("#idDistrito").val(response.distrito);
+				$("#idRepresentante").val(response.representante);
+				$("#idTelefono").val(response.fono);
+				$("#idCorreo").val(response.correo);
+				$("#idRazonSocial").val(response.razonSoc);
+			})
+			
+		})
+		
+		$(document).on("click",".btn-eliminar",function(){
+			//variable
+			let cod;
+			//obtener el código(columna 0) de la fila actual según el botón que se hizo click
+			cod=$(this).parents("tr").find("td")[0].innerHTML;
+			alertify.confirm("Seguro de eliminar?",
+			  function(){
+			    	window.location="eliminar?codigo="+cod;
+			    
+			  },
+			  function(){
+			    alertify.error('Cancel');
+			  });
+		})
+		 
+	</script>
+	
+	
+</body>
+</html>
+
+
+
+
+
+
+
+
+

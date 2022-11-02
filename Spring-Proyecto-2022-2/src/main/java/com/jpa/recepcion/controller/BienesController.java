@@ -32,7 +32,7 @@ public class BienesController {
 		
 		List<Proveedor> listaProve= servicioProvee.listarTodos();
 		
-		model.addAttribute("listaBienes", lista);
+		model.addAttribute("Bienes", lista);
 		model.addAttribute("listaProveedores", listaProve);
 		
 		return "bienes";
@@ -70,5 +70,18 @@ public class BienesController {
 		Bienes bien=servicioBien.buscar(cod);
 		
 		return bien;
+	}
+	
+	@RequestMapping("/eliminar")
+	public String deleteByID(@RequestParam("codigo") int cod,RedirectAttributes redirect) {
+		try {
+			servicioBien.eliminar(cod);
+			redirect.addFlashAttribute("MENSAJE","Bien eliminado");
+			
+		} catch (Exception e) {
+			redirect.addFlashAttribute("MENSAJE","Error en la eliminación");
+			e.printStackTrace();
+		}
+		return "redirect:/bienes/lista";
 	}
 }

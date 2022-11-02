@@ -29,7 +29,7 @@ public class Proveedor {
 	@Column(name="distrito_provee")
 	private String distrito;
 	
-	@Column(name="reprensen_provee")
+	@Column(name="represen_provee")
 	private String representante;
 	
 	@Column(name="fono_provee")

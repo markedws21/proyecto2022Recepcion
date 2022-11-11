@@ -61,7 +61,7 @@ public class OrdenCompraController {
 			redirect.addFlashAttribute("MENSAJE","ERROR AL GUARDAR");
 			e.printStackTrace();
 		}
-		return "redirect:/ordenCompra/lista";
+		 return "redirect:/ordenCompra/lista";
 	}
 	
 	@RequestMapping("/buscar")
@@ -81,7 +81,7 @@ public class OrdenCompraController {
 			redirect.addFlashAttribute("MENSAJE","Error en la eliminación");
 			e.printStackTrace();
 		}
-		return "redirect:/ordenCompra/lista";
+		 return "redirect:/ordenCompra/lista";
 	}
 }
 

@@ -38,7 +38,7 @@ public class OrdenCompraController {
 	}
 	
 	@RequestMapping("/grabar")
-	public String grabar(@RequestParam("codigo")int cod, @RequestParam("numeroOrden")String num,
+	public String grabar(@RequestParam("codigo")int cod, @RequestParam("numero")String num,
 			@RequestParam("sede")String sede, @RequestParam("codigoPostal")String codPos,
 			@RequestParam("fecha")String fec, @RequestParam("proveedor")int prove, RedirectAttributes redirect) {
 		try {

@@ -58,6 +58,7 @@
 	  
 </head>
 <body>
+<div th:insert="plantilla/UITemplate :: cabecera"></div>
 	<div class="container">
 		<br>
 		<h3 class="text-center">::: LISTA ORDEN DE COMPRA :::</h3>	  
@@ -75,6 +76,7 @@
 		      </div>
 		      <div class="modal-body">
 		        <form id="formEmpleado" action="/ordenCompra/grabar" method="post" class="row g-3">
+		        
 		         <div class="form-group col-md-4">
 				    <label for="validationCustomUsername" class="form-label fw-bold">Código</label>
 				    <div class="input-group has-validation">
@@ -87,14 +89,14 @@
 				    <label for="validationCustomUsername" class="form-label fw-bold">Numero Orden</label>
 				    <div class="input-group has-validation">
 				      <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-1-circle"></i></span>
-				      <input type="text" class="form-control" name="numeroOrden" id="idNumeroOrden">
+				      <input type="text" class="form-control" name="numero" id="idNumeroOrden">
 				    </div>
 				  </div>
 				  		  
 				  <div class="form-group col-md-6">
 				    <label for="validationCustomUsername" class="form-label fw-bold">Sede</label>
 				    <div class="input-group has-validation">
-				      <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-person"></i></span>
+				      <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-bank2"></i></span>
 				      <input type="text" class="form-control" name="sede" id="idSede">
 				    </div>
 				  </div>
@@ -114,16 +116,16 @@
 				      <i class="fas fa-calendar-week form-control-feedback2"></i>
 												    <input type="text" style="background-color:#aed6f1" class="form-control" id="usr1"
 												    													  name="fecha" placeholder="YYYY-MM-DD" autocomplete="off" >
-				</div>
+					</div>
 		          </div>
 				  
 				  <div class="form-group col-md-6">
 				    <label for="validationCustomUsername" class="form-label fw-bold">Proveedor</label>
 				    <div class="input-group has-validation">
 				      <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-file-person"></i></span>
-				      <select class="form-select form-control" name="proveedor" id="idProveedor">
+				      <select class="form-select form-control" name="prove" id="idProve">
 					  <option value=" ">[Seleccione Proveedor]</option>
-					  <option th:each="row:${listaProveedores}" 
+					  <option th:each="row:${listaProveedor}" 
 					  		th:utext="${row.nombre}"
 					  		th:value="${row.codigo}"
 					  />
@@ -145,7 +147,7 @@
 	    <div class="mt-5">
 	    <table id="tableEmpleados" class="table table-striped" style="width:100%">
         <thead>
-							   <tr>
+							    <tr>
 					                <th>Código</th>
 					                <th>Número Orden</th>
 					                <th>Sede</th>
@@ -158,11 +160,11 @@
 							  <tbody>
 								<tr  th:each="bean:${Ordenes}">
 							      <td th:text="${bean.codigo}"></td>
-							      <td th:text="${bean.numeroOrden}"></td>
+							      <td th:text="${bean.numero}"></td>
 							      <td th:text="${bean.sede}"></td>
 							      <td th:text="${bean.codigoPostal}"></td>
 							      <td th:text="${bean.fecha}"></td>
-							      <td th:text="${bean.proveedor.nombre}"></td>
+							      <td th:text="${bean.prove.nombre}"></td>
 							      <td>
                                       <a class="btn btn-info btn-editar" data-bs-toggle="modal" data-bs-target="#modalEmpleado"><i class="bi bi-pencil"></i></a>
 							          <a class="btn btn-danger btn-eliminar"><i class="bi bi-trash-fill"></i></a>
@@ -233,11 +235,11 @@
 			$.get("buscar?codigo="+cod,function(response){
 				console.log(response);
 				$("#idCodigo").val(response.codigo);
-				$("#idNumeroOrden").val(response.numeroOrden);
+				$("#idNumeroOrden").val(response.numero);
 				$("#idSede").val(response.sede);
 				$("#idCodigoPostal").val(response.codigoPostal);
 				$("#usrl").val(response.fecha);
-				$("#idProveedor").val(response.proveedor.codigo);
+				$("#idProve").val(response.prove.codigo);
 			})
 			
 		})
@@ -247,7 +249,7 @@
 			let cod;
 			//obtener el código(columna 0) de la fila actual según el botón que se hizo click
 			cod=$(this).parents("tr").find("td")[0].innerHTML;
-			alertify.confirm("Seguro de eliminar?",
+			alertify.confirm("¿Seguro de eliminar?",
 			  function(){
 			    	window.location="eliminar?codigo="+cod;
 			    

@@ -44,6 +44,10 @@ public class Proveedor {
 	@JsonIgnore
 	@OneToMany(mappedBy = "proveedor")
 	private List<Bienes> listaBienes;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "prove")
+	private List<OrdenCompra> listaOrden;
 
 	public Integer getCodigo() {
 		return codigo;
@@ -116,5 +120,10 @@ public class Proveedor {
 	public void setListaBienes(List<Bienes> listaBienes) {
 		this.listaBienes = listaBienes;
 	}
+
+
+	
+
+
 
 }

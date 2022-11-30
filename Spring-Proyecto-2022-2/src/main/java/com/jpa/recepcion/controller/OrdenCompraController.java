@@ -32,15 +32,15 @@ public class OrdenCompraController {
 		List<Proveedor> listaProve = serviceProveedor.listarTodos();
 		
 		model.addAttribute("Ordenes", lista);
-		model.addAttribute("listaProveedores", listaProve);
+		model.addAttribute("listaProveedor", listaProve);
 		
 		return "ordenCompra";
 	}
 	
 	@RequestMapping("/grabar")
-	public String grabar(@RequestParam("codigo")int cod, @RequestParam("numeroOrden")String num,
+	public String grabar(@RequestParam("codigo")int cod, @RequestParam("numero")String num,
 			@RequestParam("sede")String sede, @RequestParam("codigoPostal")String codPos,
-			@RequestParam("fecha")String fec, @RequestParam("proveedor")int prove, RedirectAttributes redirect) {
+			@RequestParam("fecha")String fec, @RequestParam("prove")int prove, RedirectAttributes redirect) {
 		try {
 			OrdenCompra ord = new OrdenCompra();
 			ord.setCodigo(cod);

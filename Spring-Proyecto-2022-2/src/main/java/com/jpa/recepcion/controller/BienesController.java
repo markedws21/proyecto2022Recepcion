@@ -22,7 +22,7 @@ public class BienesController {
 	
 	@Autowired
 	private BienesService servicioBien;
-	
+	 
 	@Autowired
 	private ProveedorService servicioProvee;
 	

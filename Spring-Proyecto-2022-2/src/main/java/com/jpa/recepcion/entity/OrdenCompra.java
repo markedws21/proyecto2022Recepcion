@@ -34,7 +34,16 @@ public class OrdenCompra {
 	
 	@ManyToOne
 	@JoinColumn(name="cod_provee")
-	private Proveedor proveedor;
+	private Proveedor prove;
+	
+	
+	public Proveedor getProve() {
+		return prove;
+	}
+
+	public void setProve(Proveedor prove) {
+		this.prove = prove;
+	}
 
 	public Integer getCodigo() {
 		return codigo;
@@ -76,13 +85,6 @@ public class OrdenCompra {
 		this.fecha = fecha;
 	}
 
-	public Proveedor getProveedor() {
-		return proveedor;
-	}
-
-	public void setProveedor(Proveedor proveedor) {
-		this.proveedor = proveedor;
-	}
 	
 	
 }
